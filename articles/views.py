@@ -204,7 +204,8 @@ def search_by_tag(request, tag):
 
 # Shows search by category results. (When user clicks on category).
 def search_by_category(request, category_name):
-    category = Category.objects.get(name=category_name)
+    # category = Category.objects.get(name=category_name)
+    category = get_object_or_404(Category, name=category_name)
     articles = Article.objects.filter(category=category)
     paginator = Paginator(articles, 9)
     if 'page' in request.GET:

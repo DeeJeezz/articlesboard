@@ -122,11 +122,12 @@
                 <div class="collapse navbar-collapse justify-content-end">
                     <form class="navbar-form">
                         <div class="input-group no-border">
-                            <input type="text" value="" class="form-control" placeholder="Search...">
-                            <button type="submit" class="btn btn-default btn-round btn-just-icon">
+                            <input type="text" value="" id="id_searchInput" class="form-control" placeholder="Search...">
+                            <div id="id_searchSuggestions"></div>
+                            <a href="#" id="id_searchButton" class="btn btn-default btn-round btn-just-icon">
                                 <i class="material-icons">search</i>
                                 <div class="ripple-container"></div>
-                            </button>
+                            </a>
                         </div>
                     </form>
                     {% if request.user.is_authenticated %}
@@ -231,5 +232,34 @@
 <!-- </div> -->
     
 </body>
+<script>
+    $(document).ready(function() {
+        $('#id_searchInput').on('input', function(){
+            var search_query = $(this).val();
+            var result;
+            $.get(
+                'articles/search/tag/' + search_query,
+                function(data, status) {
+                    console.log('Tag search', status, data)
+                }
+            ).done(function(data){
+                result += data;
+            }).fail(function() {
 
+            });
+            $.get(
+                'articles/search/category/' + search_query,
+                function(data, status){
+                    console.log('Category search', status, data);
+                }
+            ).done(function(data){
+                result += data;
+            }).fail(function() {
+
+            });
+            console.log(result);
+            $('#id_searchSuggestions').html(result);
+        });
+    });
+</script>
 </html>
