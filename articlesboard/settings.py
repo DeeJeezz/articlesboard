@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'articles.apps.ArticlesConfig',
     'bootstrap4',
     'widget_tweaks',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -70,8 +71,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'articlesboard.wsgi.application'
-
+# WSGI_APPLICATION = 'articlesboard.wsgi.application'
+ASGI_APPLICATION = 'articlesboard.routing.application'
 
 DATABASES = {
     'default': {
@@ -83,8 +84,16 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
-
+# redis_host = os.environ.get('REDIS_HOST', 'localhost')
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'asgi_redis.RedisChannelLayer',
+#         "CONFIG": {
+#             "hosts": [(redis_host, 6379)],
+#         },
+#         'ROUTING': 'articlesboard.routing',
+#     }
+# }
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
